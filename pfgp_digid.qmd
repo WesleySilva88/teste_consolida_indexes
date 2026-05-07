@@ -1,0 +1,144 @@
+---
+title: "Proposta de indicadores PFGP 2030"
+author: "CGINF/DIGID"
+format: pptx
+editor: visual
+---
+
+
+```{r}
+library(readxl)
+library(dplyr)
+library(data.table)
+library(janitor)
+
+proposta <- read_excel("Proposta de indicadores Eduardo.xlsx") %>%
+  setDT %>%
+  clean_names() %>%
+  setorder(dimensao_nome_original,na.last =T)
+
+
+```
+
+
+
+```{r,results = 'asis' }
+lapply(
+  split(proposta[!is.na(dimensao_nome_original)],
+        by = "dimensao_nome_original"),
+  function(splt){
+    content_antes <- gsub("\\\n","\n* ",splt$como_estava) %>% paste0("\n\n* ",.)
+    content_proposta <- gsub("\\\n","\n* ",
+                             splt$indicadores_propostos) %>% paste0("\n\n* ",.)
+    
+    cat("\n\n# ",splt$dimensao_nome_original)
+    cat("\n\n:::: {.columns}")
+    cat("\n\n::: {.column}\n\n Como Estava")
+    cat("\n\n ",content_antes)
+    cat("\n\n:::")
+    cat("\n\n::: {.column}\n\n Proposta")
+    cat("\n\n ",content_proposta)
+    cat("\n\n:::")
+    cat("\n\n::::")
+    return("")
+  }
+)
+```
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+# In the morning
+
+## Getting up
+
+-   Turn off alarm
+-   Get out of bed
+
+## Breakfast
+
+-   Eat eggs
+-   Drink coffee
+
+# In the evening
+
+## Dinner
+
+-   Eat spaghetti
+-   Drink wine
+
+## Going to sleep
+
+-   Get in bed
+
+-   Count sheep
+
+------------------------------------------------------------------------
+
+-   Turn off alarm
+
+-   Get out of bed
+
+------------------------------------------------------------------------
+
+-   Get in bed
+-   Count sheep
+
+------------------------------------------------------------------------
+
+::: {.incremental}
+
+-   Eat spaghetti
+-   Drink wine
+
+:::
+
+----------------------------
+
+::: {.nonincremental}
+
+-   Eat spaghetti
+-   Drink wine
+
+:::
+
+----------------------------
+
+:::: {.columns}
+::: {.column}
+contents...
+:::
+
+::: {.column}
+contents...
+:::
+
+::: {.column}
+Mais contents...
+:::
+
+----------------------------
+
+::::::
+
+Slide content
+
+::: {.notes}
+Speaker notes go here.
+:::
