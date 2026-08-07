@@ -1,5 +1,5 @@
 ---
-title: "Pessoas negras na APFA"
+title: "Pessoas negras na APF"
 output: html_document
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
